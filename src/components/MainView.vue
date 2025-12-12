@@ -16,16 +16,25 @@
           </v-col>
         </v-row>
       </v-container>
-      {{ passed }}
-      {{ currentStatus }}
+      <div>
+      振動機能利用可否:{{ enableVibrationFeature }}
+      </div>
+      <div>
+      経過時間:{{ passed }}
+      </div>
+      <div>
+      現在の振動ステータス:{{ currentStatus }}
+      </div>
+      <div>
       <v-btn @click="vibrationTest">vibration test</v-btn>
+      </div>
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts" setup>
 import { useVibrationPattern, VIBRATION_PATTERN_LIST } from "../composables/VibrationPattern";
-const { setPattern, start, stop, canStart, canStop, currentStatus, currentVibrationPattern, passed } = useVibrationPattern();
+const { setPattern, start, stop, enableVibrationFeature, canStart, canStop, currentStatus, currentVibrationPattern, passed } = useVibrationPattern();
 function vibrationTest() {
   navigator.vibrate(1000);
 }

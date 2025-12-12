@@ -16,6 +16,7 @@ export function useVibrationPattern() {
     const currentStatus = computed(computeCurrentStatus);
     const canStart = computed(() => currentVibrationPattern.value != '未選択' && beginTimestamp.value == 0);
     const canStop = computed(() => loopInterval.value != 0);
+    const enableVibrationFeature = computed(() => !!navigator.vibrate);
     function setPattern(pattern: VIBRATION_PATTERN) {
         currentVibrationPattern.value = pattern;
     }
@@ -51,6 +52,7 @@ export function useVibrationPattern() {
         setPattern,
         start,
         stop,
+        enableVibrationFeature,
         canStart,
         canStop,
         beginTimestamp,
