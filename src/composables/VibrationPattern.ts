@@ -7,6 +7,8 @@ export type VIBRATION_STATUS = typeof VIBRATION_STATUS_LIST[number];
 
 const PROCESS_INTERVAL = 50;
 const DELAY_DEFAULT = 17 * 60 * 1000; // 17分
+const CUTOFF_DEFAULT = 17 * 60 * 1000; // 17分
+const TOTAL_DEFAULT = 8.5 * 60 * 60 * 1000 // 8時間30分
 const VIBRATION_PERIOD = 5000; // 5秒間振動を続ける
 const VIBRATION_INTERVAL = 1000; // 1秒周期で繰り返す
 const VIBRATION_DURATION = 800; // 800ms 振動する
@@ -17,12 +19,16 @@ export function useVibrationPattern() {
     const currentTimestamp = ref(0);
     const processIntervalInstance = ref(0);
     const vibrationIntervalInstance = ref(0);
+    const total = ref(TOTAL_DEFAULT);
     const delay = ref(DELAY_DEFAULT);
+    const cutoff = ref(CUTOFF_DEFAULT);
     const pattern = ref<VIBRATION_PATTERN>('未選択');
     const status = ref<VIBRATION_STATUS>('停止');
 
     const enableVibrationFeature = computed(() => !!navigator.vibrate);
     const currentDelay = computed(() => delay.value);
+    const currentTotal = computed(() => total.value);
+    const currentCutoff = computed(() => cutoff.value);
     const currentStatus = computed(() => status.value);
     const currentVibrationPattern = computed(() => pattern.value);
     const canStart = computed(() => currentVibrationPattern.value != '未選択' && beginTimestamp.value == 0);
@@ -52,6 +58,12 @@ export function useVibrationPattern() {
     }
     function setDelay(_delay: number) {
         delay.value = _delay;
+    }
+    function setTotal(_total: number) {
+        total.value = _total;
+    }
+    function setCutoff(_cutoff: number) {
+        cutoff.value = _cutoff;
     }
 
     function start() {
@@ -84,15 +96,19 @@ export function useVibrationPattern() {
     }
     function process() {
         currentTimestamp.value = new Date().getTime();
+        // 開始遅延より手前
         if (passed.value <= delay.value) {
             return;
         }
-        else {
-            const computedStatus = computeVibrationStatus();
-            if (computedStatus != status.value) {
-                status.value = computedStatus;
-            }
+        // 終了切上より後
+        if (passed.value >= total.value - cutoff.value) {
+            return;
         }
+        const computedStatus = computeVibrationStatus();
+        if (computedStatus != status.value) {
+            status.value = computedStatus;
+        }
+
     }
 
     return {
@@ -100,6 +116,8 @@ export function useVibrationPattern() {
         start,
         stop,
         setDelay,
+        setTotal,
+        setCutoff,
         enableVibrationFeature,
         canStart,
         canStop,
@@ -107,6 +125,8 @@ export function useVibrationPattern() {
         currentVibrationPattern,
         currentStatus,
         currentDelay,
+        currentTotal,
+        currentCutoff,
         passed
     }
 }
