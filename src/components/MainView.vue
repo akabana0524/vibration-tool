@@ -18,6 +18,7 @@
       </v-container>
       {{ passed }}
       {{ currentStatus }}
+      <v-btn @click="vibrationTest">vibration test</v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -25,4 +26,7 @@
 <script lang="ts" setup>
 import { useVibrationPattern, VIBRATION_PATTERN_LIST } from "../composables/VibrationPattern";
 const { setPattern, start, stop, canStart, canStop, currentStatus, currentVibrationPattern, passed } = useVibrationPattern();
+function vibrationTest() {
+  navigator.vibrate(1000);
+}
 </script>
