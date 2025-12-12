@@ -37,6 +37,7 @@
 import { useVibrationPattern, VIBRATION_PATTERN_LIST } from "../composables/VibrationPattern";
 const { setPattern, start, stop, enableVibrationFeature, canStart, canStop, currentStatus, currentVibrationPattern, passed } = useVibrationPattern();
 function vibrationTest() {
-  navigator.vibrate(1000);
+  alert('振動テストします');
+  navigator.vibrate(2000);
 }
 </script>
