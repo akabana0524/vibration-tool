@@ -25,10 +25,6 @@
       <div>
       現在の振動ステータス:{{ currentStatus }}
       </div>
-      <div>
-      <v-btn @click="vibrationTest">@click</v-btn>
-      <v-btn @touchstart="vibrationTest">@touchstart</v-btn>
-      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -36,8 +32,5 @@
 <script lang="ts" setup>
 import { useVibrationPattern, VIBRATION_PATTERN_LIST } from "../composables/VibrationPattern";
 const { setPattern, start, stop, enableVibrationFeature, canStart, canStop, currentStatus, currentVibrationPattern, passed } = useVibrationPattern();
-function vibrationTest() {
-  alert('振動テストします');
-  navigator.vibrate([2000, 1000, 2000]);
-}
+
 </script>

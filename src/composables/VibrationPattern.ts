@@ -42,7 +42,7 @@ export function useVibrationPattern() {
         switch (currentStatus.value) {
             case '停止': break;
             case '振動中':
-                navigator.vibrate(50);
+                navigator.vibrate(100);
         }
     }
     function computeCurrentStatus(): VIBRATION_STATUS {
