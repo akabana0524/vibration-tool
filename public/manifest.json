@@ -1,0 +1,13 @@
+{
+  "name": "Task Memo",
+  "icons": [
+    {
+      "src": "vite.svg",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "https://akabana0524.github.io/vibration-tool/",
+  "display": "standalone",
+  "background_color": "black",
+  "theme_color": "gray"
+}
