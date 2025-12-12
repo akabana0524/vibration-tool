@@ -1,10 +1,6 @@
 export interface ExportData {
   exportDate: string;
   version: string;
-  tags?: any;
-  tasks?: any;
-  taskHistories?: any;
-  taskCategories?: any;
   backup?: any;
 }
 
