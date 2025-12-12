@@ -37,6 +37,7 @@ export function useVibrationPattern() {
                     vibrationIntervalInstance.value = 0;
                     break;
                 case '振動中':
+                    navigator.vibrate(VIBRATION_DURATION);
                     vibrationIntervalInstance.value = window.setInterval(() => {
                         navigator.vibrate(VIBRATION_DURATION);
                     }, VIBRATION_INTERVAL);
@@ -64,6 +65,7 @@ export function useVibrationPattern() {
     function stop() {
         if (canStop.value) {
             clearInterval(processIntervalInstance.value);
+            status.value = '停止';
             processIntervalInstance.value = 0;
             beginTimestamp.value = 0;
             currentTimestamp.value = 0;
