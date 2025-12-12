@@ -26,7 +26,8 @@
       現在の振動ステータス:{{ currentStatus }}
       </div>
       <div>
-      <v-btn @click="vibrationTest">vibration test</v-btn>
+      <v-btn @click="vibrationTest">@click</v-btn>
+      <v-btn @touchstart="vibrationTest">@touchstart</v-btn>
       </div>
     </v-card-text>
   </v-card>
