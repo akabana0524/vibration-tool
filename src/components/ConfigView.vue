@@ -77,36 +77,36 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useTheme } from '../composables/Theme'
-import { useDataExport } from '../composables/DataPortability'
-import BackupList from './BackupList.vue'
-const { swapTheme, themeIcon } = useTheme()
-const { exportAllData, importAllData } = useDataExport()
-const dialog = ref(false)
-const tab = ref('')
-const fileInput = ref<HTMLInputElement | null>(null)
+import { ref } from 'vue';
+import { useTheme } from '../composables/Theme';
+import { useDataExport } from '../composables/DataPortability';
+import BackupList from './BackupList.vue';
+const { swapTheme, themeIcon } = useTheme();
+const { exportAllData, importAllData } = useDataExport();
+const dialog = ref(false);
+const tab = ref('');
+const fileInput = ref<HTMLInputElement | null>(null);
 
 function reset() {
-  localStorage.clear()
-  location.reload()
+  localStorage.clear();
+  location.reload();
 }
 
 function handleExport() {
-  exportAllData()
+  exportAllData();
 }
 
 function triggerFileInput() {
-  fileInput.value?.click()
+  fileInput.value?.click();
 }
 
 async function handleImport(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0]
+  const file = (event.target as HTMLInputElement).files?.[0];
   if (file) {
     try {
-      await importAllData(file)
+      await importAllData(file);
     } catch (error) {
-      console.error('Import error:', error)
+      console.error('Import error:', error);
     }
   }
 }

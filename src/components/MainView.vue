@@ -78,13 +78,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { useVibrationPattern, VIBRATION_PATTERN_LIST } from '../composables/VibrationPattern'
-import humonizeDuration from 'humanize-duration'
+import { computed } from 'vue';
+import { useVibrationPattern, VIBRATION_PATTERN_LIST } from '../composables/VibrationPattern';
+import humonizeDuration from 'humanize-duration';
 
-const MAX_DELAY = 1000 * 60 * 60
-const MAX_TOTAL = 1000 * 60 * 60 * 12
-const MAX_CUTOFF = 1000 * 60 * 60
+const MAX_DELAY = 1000 * 60 * 60;
+const MAX_TOTAL = 1000 * 60 * 60 * 12;
+const MAX_CUTOFF = 1000 * 60 * 60;
 
 const {
   setPattern,
@@ -102,11 +102,13 @@ const {
   currentTotal,
   currentCutoff,
   passed,
-} = useVibrationPattern()
-const delayFormatString = computed(() => humonizeDuration(currentDelay.value, { language: 'ja' }))
-const totalFormatString = computed(() => humonizeDuration(currentTotal.value, { language: 'ja' }))
-const cutoffFormatString = computed(() => humonizeDuration(currentCutoff.value, { language: 'ja' }))
+} = useVibrationPattern();
+const delayFormatString = computed(() => humonizeDuration(currentDelay.value, { language: 'ja' }));
+const totalFormatString = computed(() => humonizeDuration(currentTotal.value, { language: 'ja' }));
+const cutoffFormatString = computed(() =>
+  humonizeDuration(currentCutoff.value, { language: 'ja' })
+);
 const passedFormatString = computed(() =>
-  humonizeDuration(passed.value, { units: ['h', 'm', 's', 'ms'], language: 'ja' }),
-)
+  humonizeDuration(passed.value, { units: ['h', 'm', 's', 'ms'], language: 'ja' })
+);
 </script>

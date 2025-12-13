@@ -11,6 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useBackup } from '../composables/Backup'
-const { backups, restoreBackup } = useBackup()
+import { useBackup } from '../composables/Backup';
+const { backups, restoreBackup } = useBackup();
 </script>

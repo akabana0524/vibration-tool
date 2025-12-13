@@ -24,14 +24,14 @@
 </template>
 
 <script lang="ts" setup>
-import ConfigView from './components/ConfigView.vue'
-import MainView from './components/MainView.vue'
-import { useBackup } from './composables/Backup'
-import { useTheme } from './composables/Theme'
+import ConfigView from './components/ConfigView.vue';
+import MainView from './components/MainView.vue';
+import { useBackup } from './composables/Backup';
+import { useTheme } from './composables/Theme';
 
-const { createBackup, loadBackups } = useBackup()
-const { loadTheme, theme } = useTheme()
-loadTheme()
-loadBackups()
-createBackup()
+const { createBackup, loadBackups } = useBackup();
+const { loadTheme, theme } = useTheme();
+loadTheme();
+loadBackups();
+createBackup();
 </script>
