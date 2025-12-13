@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+coverage
+.nuxt
+.output
+.vite
+*.min.js
+*.min.css
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb

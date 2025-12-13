@@ -1,96 +1,96 @@
 export interface ExportData {
-  exportDate: string;
-  version: string;
-  backup?: any;
+  exportDate: string
+  version: string
+  backup?: any
 }
 
 export function useDataExport() {
   function exportAllData() {
     const exportData: ExportData = {
       exportDate: new Date().toISOString(),
-      version: "1.0"
-    };
+      version: '1.0',
+    }
 
     // ローカルストレージから全てのデータを取得
-    const keys = ['backup'];
+    const keys = ['backup']
 
     keys.forEach(key => {
-      const data = localStorage.getItem(key);
+      const data = localStorage.getItem(key)
       if (data) {
         try {
-          exportData[key as keyof ExportData] = JSON.parse(data);
+          exportData[key as keyof ExportData] = JSON.parse(data)
         } catch (e) {
-          exportData[key as keyof ExportData] = data;
+          exportData[key as keyof ExportData] = data
         }
       }
-    });
+    })
 
     // JSONファイルとしてダウンロード
-    const dataStr = JSON.stringify(exportData, null, 2);
-    const blob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-    link.download = `vibration-tool-${timestamp}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    const dataStr = JSON.stringify(exportData, null, 2)
+    const blob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5)
+    link.download = `vibration-tool-${timestamp}.json`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
   }
 
   function importAllData(file: File): Promise<void> {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
+      const reader = new FileReader()
 
-      reader.onload = (e) => {
+      reader.onload = e => {
         try {
-          const content = e.target?.result as string;
-          const importData: ExportData = JSON.parse(content);
+          const content = e.target?.result as string
+          const importData: ExportData = JSON.parse(content)
 
           // バージョンチェック（将来的な互換性のため）
           if (!importData.version) {
             if (!confirm('バージョン情報がないファイルです。インポートを続行しますか？')) {
-              reject(new Error('Import cancelled'));
-              return;
+              reject(new Error('Import cancelled'))
+              return
             }
           }
 
           // 確認ダイアログ
           if (!confirm('現在のデータを上書きしてインポートします。よろしいですか？')) {
-            reject(new Error('Import cancelled'));
-            return;
+            reject(new Error('Import cancelled'))
+            return
           }
 
           // データをローカルストレージに保存
-          const keys: (keyof ExportData)[] = ['backup'];
+          const keys: (keyof ExportData)[] = ['backup']
 
           keys.forEach(key => {
             if (importData[key]) {
-              localStorage.setItem(key, JSON.stringify(importData[key]));
+              localStorage.setItem(key, JSON.stringify(importData[key]))
             }
-          });
+          })
 
-          alert('インポートが完了しました。ページをリロードします。');
-          window.location.reload();
-          resolve();
+          alert('インポートが完了しました。ページをリロードします。')
+          window.location.reload()
+          resolve()
         } catch (error) {
-          reject(error);
-          alert('インポートに失敗しました。ファイル形式を確認してください。');
+          reject(error)
+          alert('インポートに失敗しました。ファイル形式を確認してください。')
         }
-      };
+      }
 
       reader.onerror = () => {
-        reject(new Error('File read error'));
-        alert('ファイルの読み込みに失敗しました。');
-      };
+        reject(new Error('File read error'))
+        alert('ファイルの読み込みに失敗しました。')
+      }
 
-      reader.readAsText(file);
-    });
+      reader.readAsText(file)
+    })
   }
 
   return {
     exportAllData,
-    importAllData
-  };
+    importAllData,
+  }
 }
